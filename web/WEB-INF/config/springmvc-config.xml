@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/mvc
+http://www.springframework.org/schema/mvc/spring-mvc.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 与spring注解配合使用，扫描指定包及其子包下面的带有Controller、Service注解下的类，生成bean-->
+    <context:component-scan base-package="app22a.controller"></context:component-scan>
+
+    <!-- 如果在配置前端控制器时拦截了所有的请求，不做特殊处理就会导致部分静态资源无法使用。如果是这种情况就可以使用下面的配置来访问静态资源文件，所以使用resource配置-->
+    <!-- 没有<annotation-driven/>，<resources/>元素会阻止任意控制器被调用-->
+    <!--  配置注解的处理器映射器和处理器适配器-->
+    <mvc:annotation-driven/>
+    <mvc:resources mapping="/*.html" location="/"/>
+    <!-- 配置视图解析器，在Controller中设置视图名的时候会自动加上前缀和后缀 -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/"></property>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    <!--Servlet 3.0之前，需要定义CommonsMultipartResolver来支持文件上传功能，bean id固定为"multipartResolver"-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!--定义上传文件最大为1KB-->
+        <property name="maxUploadSize" value="1000000"/>
+        <property name="uploadTempDir" value="file:E://tmp"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+</beans>
