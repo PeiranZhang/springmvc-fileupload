@@ -14,6 +14,14 @@
         </init-param>
         <!--值不为0表示，tomcat启动该应用时，加载servlet，而不是等到第一请求到来时再加载servlet-->
         <load-on-startup>1</load-on-startup>
+        <multipart-config>
+            <!--临时目录，需要目录存在，否则报错-->
+            <location>E:\\tmp</location>
+            <max-file-size>20848820</max-file-size>
+            <max-request-size>418018841</max-request-size>
+            <!--上传文件超出这个容量界限时，会被写入磁盘。-->
+            <file-size-threshold>1048576</file-size-threshold>
+        </multipart-config>
     </servlet>
     <servlet-mapping>
         <servlet-name>springmvc</servlet-name>
